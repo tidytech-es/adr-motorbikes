@@ -1,0 +1,400 @@
+<!doctype html>
+<!-- ADR Motorbikes (A Dues Rodes) · landing page
+     Tipo: service (taller de motos: se contrata un trabajo) · site-kind: other.
+     Base: kit tasteskill (system.css, layout.css, motion) + paleta propia oscura.
+     Decisiones del brief que mandan sobre el kit: modo oscuro, capa oscura sobre la foto del hero,
+     fade-ins sutiles al hacer scroll (desactivados con prefers-reduced-motion). -->
+<html lang="es" data-type="service" data-radius="soft" data-buttons="solid" data-motion>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ADR Motorbikes: taller de motos en el Pol. Ind. Collsabadell</title>
+<meta name="description" content="Taller y concesionario de motos y bicicletas en el Polígono Industrial Collsabadell (Barcelona). Mantenimiento, reparaciones, neumáticos y puesta a punto. 4,8 sobre 5 en Google.">
+<meta name="site-kind" content="other">
+<meta name="page-type" content="service">
+<meta name="theme-color" content="#121315">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="color-scheme" content="dark">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/img/fachada-esquina.webp" fetchpriority="high">
+
+<link rel="stylesheet" href="assets/system.css">
+<link rel="stylesheet" href="assets/ui/cards.css">
+<link rel="stylesheet" href="assets/motion/motion.css">
+<link rel="stylesheet" href="assets/layout/layout.css">
+<link rel="stylesheet" href="assets/icons/icon.css">
+
+<!-- Paleta: generada con start.mjs brand (carbón + tinta cálida + ámbar del rótulo de la fachada) -->
+<style>
+:root {
+  --p-bg: #121315; --p-surface: #1b1d20; --p-ink: #f1eee8; --p-muted: #a7a39b;
+  --p-accent: #f39a1e; --p-accent-ink: #121315; --p-action: #f39a1e; --p-action-ink: #121315;
+  --p-inv-bg: #f1eee8; --p-inv-surface: #dfdcd7; --p-inv-ink: #121315; --p-inv-muted: #5d5c5c;
+  --p-inv-accent: #121315; --p-inv-accent-ink: #f1eee8; --p-inv-action: #121315; --p-inv-action-ink: #f1eee8;
+  --font-display: "Archivo", system-ui, sans-serif;
+  --font-text: "Archivo", system-ui, sans-serif;
+  /* Titulares anchos y contundentes, como el rótulo "A DUES RODES" */
+  --display-weight: 600;
+  --display-tracking: -0.025em;
+  --display-tracking-xl: -0.035em;
+  --display-stretch: 118%;
+  --ly-scale: 0.9;
+}
+</style>
+<link rel="stylesheet" href="assets/adr.css?v=11">
+</head>
+
+<body>
+<!-- type: service · deal: hero photo (data-calm left, capa oscura por brief), nav simple, close visit,
+     buttons solid, mark ring (eco del logo circular), grounds: planos (main / surface).
+     Pantallas: hero (1) · servicios (2) · taller (1) · opiniones (1) · cita (1) · contacto/footer (1). -->
+
+<header class="nav">
+  <div class="wrap nav__bar">
+    <a class="skip" href="#servicios">Saltar al contenido</a>
+    <a class="nav__logo" href="#top" aria-label="ADR Motorbikes, inicio">
+      <img class="nav__logo-img" src="assets/img/logo-adr-192.png" alt="" width="40" height="40" decoding="async">ADR<span class="nav__logo-sub">Motorbikes</span>
+    </a>
+    <nav class="nav__links" aria-label="Principal">
+      <div class="nav__item"><a class="nav__link" href="#servicios">Servicios</a></div>
+      <div class="nav__item"><a class="nav__link" href="#taller">Taller</a></div>
+      <div class="nav__item"><a class="nav__link" href="#opiniones">Opiniones</a></div>
+      <div class="nav__item"><a class="nav__link" href="#contacto">Contacto</a></div>
+    </nav>
+    <div class="nav__actions">
+      <a class="btn btn--primary" href="#cita">Pedir cita</a>
+    </div>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menú">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============================================================
+       1 · HERO
+       Foto de la fachada en esquina (la más dinámica: rótulo iluminado + cielo azul).
+       Capa oscura en degradado (.hero__shade) para que el texto lea sobre la izquierda.
+       En móvil el kit coloca la foto arriba y el texto debajo, sobre fondo carbón.
+       ============================================================ -->
+  <section class="hero hero--photo hero--adr" data-box="none" data-tone="dark" data-calm="left" aria-labelledby="hero-h">
+    <img class="hero__bg"
+         src="assets/img/fachada-esquina.webp"
+         alt="Fachada de ADR Motorbikes al anochecer: escaparate iluminado lleno de motos bajo el rótulo A Dues Rodes"
+         width="1360" height="1020"
+         style="--ly-pos: 62% 40%; --ly-pos-phone: 70% 45%"
+         fetchpriority="high" decoding="async">
+    <div class="hero__shade" aria-hidden="true"></div>
+
+    <div class="wrap"><div class="hero-text">
+      <div class="hero__text">
+        <p class="hero__eyebrow">
+          <span class="stars" aria-hidden="true">
+            <svg viewBox="0 0 20 20"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z"/></svg>
+          </span>
+          <span><strong>4,8</strong> en Google · casi 90 reseñas</span>
+        </p>
+        <h1 id="hero-h">Expertos en el cuidado de tu moto</h1>
+        <p class="hero__lead">Taller y concesionario en el Polígono Collsabadell. Mantenimiento, reparaciones y puesta a punto de motos y bicis, con presupuesto antes de tocar una sola pieza.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="#cita">Pedir cita<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+          <a class="btn btn--secondary" href="#servicios">Ver servicios</a>
+        </div>
+      </div>
+
+      <dl class="hero__facts">
+        <div><dt>Valoración</dt><dd>4,8 / 5 en Google</dd></div>
+        <div><dt>Lunes a jueves</dt><dd>8:00–13:30 · 15:00–18:00</dd></div>
+        <div><dt>Viernes</dt><dd>8:00–14:00</dd></div>
+        <div><dt>Dónde</dt><dd>Pol. Ind. Collsabadell</dd></div>
+      </dl>
+    </div></div>
+  </section>
+
+  <!-- ============================================================
+       2 · SERVICIOS
+       Foto vertical de la supermotard a la izquierda; a la derecha el titular
+       y cuatro servicios en rejilla 2x2. Una pantalla.
+       ============================================================ -->
+  <section class="section" id="servicios" aria-labelledby="servicios-h">
+    <div class="wrap grid grid--top">
+      <figure class="svc__photo span-5" data-reveal>
+        <img src="assets/img/supermotard.webp" alt="Supermotard azul y blanca con llantas azules, aparcada junto a un muro con hiedra" width="765" height="1020" loading="lazy" decoding="async">
+      </figure>
+
+      <div class="span-7 start-6 svc__body">
+        <div class="section-head" data-reveal>
+          <h2 id="servicios-h">Servicios del taller. <span class="muted">Para motos de calle, trail, supermotard y bicis.</span></h2>
+        </div>
+
+        <ul class="svc__grid" role="list">
+          <li class="svc" data-spot data-reveal style="--d: 0ms">
+            <svg class="svc__ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.1L3.5 17.2a1.8 1.8 0 0 0 2.5 2.5l5.8-5.8a4 4 0 0 0 5.1-5.4l-2.4 2.4-2.2-.4-.4-2.2z"/></svg>
+            <h3>Mantenimiento general</h3>
+            <p>Revisiones según el libro de tu moto: aceite, filtros, frenos, transmisión y líquidos.</p>
+          </li>
+          <li class="svc" data-spot data-reveal style="--d: 60ms">
+            <svg class="svc__ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M12 18v3M4.2 7.5l2.6 1.5M17.2 15l2.6 1.5M4.2 16.5l2.6-1.5M17.2 9l2.6-1.5"/><circle cx="12" cy="12" r="3.5"/></svg>
+            <h3>Reparaciones</h3>
+            <p>Diagnóstico, mecánica y electricidad. Te damos el presupuesto antes de empezar.</p>
+          </li>
+          <li class="svc" data-spot data-reveal style="--d: 120ms">
+            <svg class="svc__ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v5M12 16v5M3 12h5M16 12h5"/></svg>
+            <h3>Neumáticos</h3>
+            <p>Montaje, equilibrado y consejo según cómo y por dónde ruedas: asfalto, mixto u off-road.</p>
+          </li>
+          <li class="svc" data-spot data-reveal style="--d: 180ms">
+            <svg class="svc__ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15a8 8 0 1 1 16 0"/><path d="M12 15l4-5"/><path d="M3 19h18"/></svg>
+            <h3>Puesta a punto</h3>
+            <p>Para la ITV, antes de un viaje o al sacar la moto del garaje. También bicicletas.</p>
+          </li>
+        </ul>
+
+        <div class="btn-row" data-reveal>
+          <a class="btn btn--primary" href="#cita">Pedir presupuesto<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       3 · TALLER E INSTALACIONES
+       Fondo alterno (surface). Pared de fotos: exposición grande + trail + bicis.
+       ============================================================ -->
+  <section class="section adr-alt" id="taller" aria-labelledby="taller-h">
+    <div class="wrap">
+      <div class="section-head--split taller__head" data-reveal>
+        <div>
+          <h2 id="taller-h">Taller y exposición en el mismo sitio</h2>
+          <p class="t-lead">Exposición de motos, taller y zona de bicicletas bajo el mismo rótulo. Ves tu moto antes y después, y hablas con quien la arregla.</p>
+        </div>
+        <dl class="taller__facts">
+          <div><dt>Motos</dt><dd>Calle, trail, scooter y supermotard</dd></div>
+          <div><dt>Bicis</dt><dd>Taller, venta y equipación</dd></div>
+        </dl>
+      </div>
+
+      <!-- Galería que se expande (portada de "Hover Expand Gallery", 21st.dev · kedhareswer).
+           Escritorio: carriles verticales, el panel activo crece al pasar el ratón / foco / clic.
+           Móvil y tablet: acordeón vertical. -->
+      <ul class="hx" data-hx data-reveal>
+        <li class="hx__item is-active">
+          <button class="hx__btn" type="button" aria-expanded="true">
+            <span class="hx__img"><img src="assets/img/exposicion-interior.webp" alt="Sala de exposición luminosa con motos de calle, scooters y una moto de cross en fila junto al ventanal" width="765" height="1020" loading="lazy" decoding="async"></span>
+            <span class="hx__label"><span class="hx__title">Exposición</span><span class="hx__meta">Motos a la venta</span></span>
+          </button>
+        </li>
+        <li class="hx__item">
+          <button class="hx__btn" type="button" aria-expanded="false">
+            <span class="hx__img"><img src="assets/img/fachada-frontal.webp" alt="Fachada frontal de A Dues Rodes al anochecer, con la exposición iluminada en la primera planta" width="1360" height="1020" loading="lazy" decoding="async"></span>
+            <span class="hx__label"><span class="hx__title">El local</span><span class="hx__meta">Pol. Ind. Collsabadell</span></span>
+          </button>
+        </li>
+        <li class="hx__item">
+          <button class="hx__btn" type="button" aria-expanded="false">
+            <span class="hx__img"><img src="assets/img/trail-lateral.webp" alt="Moto trail Zontes blanca, negra y azul vista de lado" width="680" height="486" loading="lazy" decoding="async"></span>
+            <span class="hx__label"><span class="hx__title">Trail</span><span class="hx__meta">Zontes</span></span>
+          </button>
+        </li>
+        <li class="hx__item">
+          <button class="hx__btn" type="button" aria-expanded="false">
+            <span class="hx__img"><img src="assets/img/zona-bicis.webp" alt="Tres bicicletas de montaña sobre palés de madera ante un panel rojo con ropa de ciclismo" width="1360" height="1020" loading="lazy" decoding="async"></span>
+            <span class="hx__label"><span class="hx__title">Bicicletas</span><span class="hx__meta">Taller y equipación</span></span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       4 · OPINIONES
+       Momento tipográfico con la nota (4,8) + lo que destacan los clientes.
+       Reseñas reales de Google (texto literal, recortado por frases enteras;
+       nombre + inicial del apellido). La de Blanka está en catalán: lang="ca".
+       ============================================================ -->
+  <section class="section" id="opiniones" aria-labelledby="opiniones-h">
+    <div class="wrap grid grid--top">
+      <div class="span-6 rating" data-reveal>
+        <h2 id="opiniones-h">Lo que dicen nuestros clientes</h2>
+        <p class="rating__score" aria-label="4,8 sobre 5">4,8<span>/5</span></p>
+        <p class="rating__stars" aria-hidden="true">
+          <svg viewBox="0 0 100 20"><defs><clipPath id="r48"><rect width="96" height="20"/></clipPath><path id="st" d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z"/></defs><g class="off"><use href="#st"/><use href="#st" x="20"/><use href="#st" x="40"/><use href="#st" x="60"/><use href="#st" x="80"/></g><g class="on" clip-path="url(#r48)"><use href="#st"/><use href="#st" x="20"/><use href="#st" x="40"/><use href="#st" x="60"/><use href="#st" x="80"/></g></svg>
+        </p>
+        <p class="t-lead rating__meta">Media de casi 90 reseñas en Google. Lo que más repiten: la profesionalidad del equipo y el trato.</p>
+        <div class="btn-row">
+          <a class="btn btn--secondary" href="https://www.google.com/maps/search/?api=1&amp;query=ADR%20Motorbikes%20A%20Dues%20Rodes%20Collsabadell" target="_blank" rel="noopener">Leer las reseñas en Google</a>
+        </div>
+      </div>
+
+      <!-- Reseñas reales de Google en columnas que se desplazan en sentidos opuestos
+           (portada de "Vertical Testimonials Marquee", 21st.dev · shadcnspace).
+           adr.js duplica cada pista para el bucle; pausa al pasar el ratón, con el foco
+           y con el botón. Con reduced-motion queda como lista fija. -->
+      <div class="span-6 start-7 reviews mq" data-mq data-reveal style="--d: 80ms">
+        <div class="mq__col">
+          <div class="mq__track">
+          <figure class="review" data-spot>
+            <span class="review__stars" role="img" aria-label="5 de 5 estrellas">★★★★★</span>
+            <blockquote>“Muy buen mecánico, profesional y de confianza. Trabajo rápido, buen trato y muy buenos precios. ¡Totalmente recomendable!”</blockquote>
+            <figcaption>Susanna M. · reseña en Google</figcaption>
+          </figure>
+          <figure class="review" data-spot>
+            <span class="review__stars" role="img" aria-label="5 de 5 estrellas">★★★★★</span>
+            <blockquote lang="ca">“Molt bon mecànic, amb un tracte molt proper i professional. Em va ajudar amb molta rapidesa, ja que tenia un viatge a punt de fer.”</blockquote>
+            <figcaption>Blanka T. · reseña en Google</figcaption>
+          </figure>
+          <figure class="review" data-spot>
+            <span class="review__stars" role="img" aria-label="5 de 5 estrellas">★★★★★</span>
+            <blockquote lang="ca">“Des del primer moment em van assessorar molt bé i em van ajudar a resoldre tots els dubtes que tenia abans de decidir-me. El tracte ha estat molt proper i professional.”</blockquote>
+            <figcaption>Pau C. · reseña en Google</figcaption>
+          </figure>
+          </div>
+        </div>
+        <div class="mq__col mq__col--rev">
+          <div class="mq__track">
+          <figure class="review" data-spot>
+            <span class="review__stars" role="img" aria-label="5 de 5 estrellas">★★★★★</span>
+            <blockquote>“Se nota desde el primer momento que son auténticos profesionales y que saben perfectamente lo que hacen. Trabajan con cuidado, seriedad y mucha atención al detalle.”</blockquote>
+            <figcaption>Alex A. · reseña en Google</figcaption>
+          </figure>
+          <figure class="review" data-spot>
+            <span class="review__stars" role="img" aria-label="5 de 5 estrellas">★★★★★</span>
+            <blockquote>“Taller de motos espectacular, trato profesional. Si quieres que tu moto vaya bien de verdad, tráela aquí. Tenía un problema y aquí me supieron aconsejar y resolverlo perfectamente.”</blockquote>
+            <figcaption>Edgar Z. · reseña en Google</figcaption>
+          </figure>
+          <figure class="review" data-spot>
+            <span class="review__stars" role="img" aria-label="5 de 5 estrellas">★★★★★</span>
+            <blockquote lang="ca">“Vam venir a ADR buscant una 125 per comprar. L’Alex va ser molt i molt professional i proper des del primer moment.”</blockquote>
+            <figcaption>Vimo · reseña en Google</figcaption>
+          </figure>
+          </div>
+        </div>
+        <button class="mq__pause" type="button" aria-pressed="false" aria-label="Pausar el desplazamiento de las reseñas">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path class="i-pause" d="M5 3h2v10H5zM9 3h2v10H9z"/><path class="i-play" d="M5 3l8 5-8 5z"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       5 · CITA / PRESUPUESTO
+       Formulario corto (6 campos). Al enviar compone el mensaje y lo abre
+       en WhatsApp del taller (618 82 86 72) listo para enviar.
+       ============================================================ -->
+  <section class="section adr-alt" id="cita" aria-labelledby="cita-h">
+    <div class="wrap grid grid--top">
+      <div class="span-5 cita__intro" data-reveal>
+        <h2 id="cita-h">Pide cita o presupuesto</h2>
+        <p class="t-lead">Cuéntanos qué moto tienes y qué le pasa. Te contestamos en horario de taller con un día y un precio orientativo.</p>
+        <ol class="rows cita__steps">
+          <li><span class="rows__name">Rellenas el formulario</span><span class="rows__value">1 min</span></li>
+          <li><span class="rows__name">Te confirmamos día y presupuesto</span><span class="rows__value">L–V</span></li>
+          <li><span class="rows__name">Traes la moto al taller</span><span class="rows__value">Collsabadell</span></li>
+        </ol>
+        <div class="cita__alt">
+          <p class="t-small muted">¿Prefieres hablar directamente?</p>
+          <div class="btn-row">
+            <a class="btn btn--secondary" href="tel:+34618828672">Llamar al 618 82 86 72</a>
+            <a class="btn btn--secondary" href="https://wa.me/34618828672" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+      <form class="form cita__form span-6 start-7" id="cita-form" novalidate data-reveal style="--d: 80ms">
+        <label class="field"><span class="field__label">Nombre</span>
+          <input name="nombre" type="text" autocomplete="name" required>
+          <span class="field__err" aria-live="polite"></span>
+        </label>
+        <label class="field"><span class="field__label">Teléfono</span>
+          <input name="telefono" type="tel" autocomplete="tel" inputmode="tel" required pattern="[0-9 +\(\)\-]{9,}">
+          <span class="field__err" aria-live="polite"></span>
+        </label>
+        <label class="field"><span class="field__label">Marca y modelo</span>
+          <input name="moto" type="text" placeholder="p. ej. Yamaha MT-07" required>
+          <span class="field__err" aria-live="polite"></span>
+        </label>
+        <label class="field"><span class="field__label">Servicio</span>
+          <select name="servicio" required>
+            <option value="">Elige uno</option>
+            <option>Mantenimiento / revisión</option>
+            <option>Reparación</option>
+            <option>Neumáticos</option>
+            <option>Puesta a punto</option>
+            <option>Bicicleta</option>
+            <option>Otro</option>
+          </select>
+          <span class="field__err" aria-live="polite"></span>
+        </label>
+        <label class="field field--full"><span class="field__label">Qué le pasa o qué necesitas</span>
+          <textarea name="mensaje" rows="3" required placeholder="Ruido al frenar, revisión de los 10.000 km, cambio de rueda trasera…"></textarea>
+          <span class="field__err" aria-live="polite"></span>
+        </label>
+        <div class="btn-row">
+          <button class="btn btn--primary" type="submit">Solicitar cita<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></button>
+        </div>
+        <p class="t-small muted cita__note" id="cita-note" aria-live="polite">Al enviar se abre WhatsApp con tu mensaje ya escrito para el taller.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     CONTACTO + FOOTER (una sola pantalla de cierre)
+     ============================================================ -->
+<footer class="footer closing footer--visit" id="contacto" aria-labelledby="close-h">
+  <div class="wrap">
+    <div class="closing__cta">
+      <div class="grid grid--top">
+        <div class="span-5 visit__text">
+          <h2 id="close-h">Ven a vernos al taller</h2>
+          <p class="t-lead">Polígono Industrial Collsabadell, Barcelona.<br>
+            Teléfono y WhatsApp: <a class="link" href="tel:+34618828672">618 82 86 72</a></p>
+          <!-- data-tz: system.js marca la fila de hoy. El texto "abierto ahora" lo pone adr.js (español + jornada partida) -->
+          <dl class="hours" data-tz="Europe/Madrid">
+            <dt data-days="mon-thu">Lunes a jueves</dt><dd>8:00–13:30 · 15:00–18:00</dd>
+            <dt data-days="fri">Viernes</dt><dd>8:00–14:00</dd>
+            <dt data-days="sat,sun">Sábado y domingo</dt><dd>Cerrado</dd>
+          </dl>
+          <p class="hours__now" data-adr-open></p>
+          <div class="btn-row">
+            <a class="btn btn--primary" href="#cita">Pedir cita</a>
+            <a class="btn btn--secondary" href="https://wa.me/34618828672?text=Hola%2C%20quer%C3%ADa%20pedir%20cita%20en%20el%20taller." target="_blank" rel="noopener">Escribir por WhatsApp</a>
+          </div>
+        </div>
+        <div class="span-6 start-7 visit__side">
+          <!-- Mapa: búsqueda pública de Google Maps (sin API key), carga diferida -->
+          <div class="visit__map">
+            <iframe title="Mapa: ADR Motorbikes en el Polígono Industrial Collsabadell"
+                    src="https://www.google.com/maps?q=ADR%20Motorbikes%20Pol%C3%ADgono%20Industrial%20Collsabadell&amp;output=embed"
+                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="closing__links">
+      <div class="footer__legal">
+        <a class="nav__logo footer__logo" href="#top" aria-label="ADR Motorbikes, volver arriba"><img class="nav__logo-img" src="assets/img/logo-adr-192.png" alt="" width="64" height="64" loading="lazy" decoding="async">ADR<span class="nav__logo-sub">Motorbikes</span></a>
+        <span>&copy; 2026 A Dues Rodes</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Barra de acción fija en móvil (bajo 640px) -->
+<nav class="actionbar" aria-label="Acción rápida">
+  <a class="btn btn--secondary" href="tel:+34618828672">Llamar</a>
+  <a class="btn btn--primary" href="#cita">Pedir cita</a>
+</nav>
+
+<script type="module" src="assets/system.js"></script>
+<script type="module" src="assets/motion/motion.js"></script>
+<script type="module" src="assets/layout/layout.js"></script>
+<script type="module" src="assets/adr.js?v=12"></script>
+</body>
+</html>

@@ -1,0 +1,491 @@
+/* =====================================================================
+   ADR Motorbikes · estilos propios de la página
+   Va después de system.css + layout.css: solo añade lo que el kit no trae.
+   Curvas (Emil Kowalski): ease-out fuerte para entradas, nunca ease-in.
+   ===================================================================== */
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* ---------- Accesibilidad: enlace "saltar al contenido" ---------- */
+.skip {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+.skip:focus-visible {
+  width: auto; height: auto; clip-path: none; z-index: 20;
+  top: 12px; left: var(--gut); padding: 8px 12px;
+  background: var(--p-accent); color: var(--p-accent-ink); border-radius: var(--r-sm);
+}
+
+/* ---------- Logo: ADR en ancho + "Motorbikes" discreto ---------- */
+.nav__logo { font-weight: 700; font-stretch: 125%; letter-spacing: -0.01em; }
+.nav__logo .mark { color: var(--p-accent); }
+.nav__logo-sub {
+  font-weight: 400; font-stretch: 100%; font-size: max(12px, 0.62em);
+  color: var(--p-muted); letter-spacing: 0; margin-left: 2px; align-self: center; transform: translateY(1px);
+}
+
+/* =====================================================================
+   HERO
+   ===================================================================== */
+.hero--adr { isolation: isolate; overflow: hidden; }
+
+/* Capa oscura pedida en el brief: degradado desde la izquierda (lado del texto)
+   y desde abajo (línea de datos). La derecha deja ver el rótulo iluminado. */
+.hero--adr .hero__shade {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg, rgb(10 11 12 / .92) 0%, rgb(10 11 12 / .78) 34%, rgb(10 11 12 / .28) 62%, rgb(10 11 12 / .1) 100%),
+    linear-gradient(0deg, rgb(10 11 12 / .85) 0%, rgb(10 11 12 / 0) 32%);
+}
+.hero--adr > .wrap { position: relative; z-index: 1; }
+
+/* Pequeña línea de confianza sobre el h1 */
+.hero__eyebrow {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  margin: 0 0 var(--s-5); font-size: var(--t-small); color: rgb(255 255 255 / .86);
+}
+.hero__eyebrow strong { color: #fff; font-weight: 600; }
+.hero__eyebrow .stars svg { width: 16px; height: 16px; display: block; fill: var(--p-accent); }
+
+.hero--adr h1 { font-weight: var(--display-weight); max-width: 13ch; }
+.hero--adr .hero__lead { max-width: 52ch; color: rgb(255 255 255 / .88); }
+
+/* Datos al pie: una fina línea ámbar encima de cada uno */
+.hero--adr .hero__facts > div { padding-top: var(--s-4); border-top: 1px solid rgb(255 255 255 / .22); position: relative; }
+.hero--adr .hero__facts > div::before {
+  content: ""; position: absolute; top: -1px; left: 0; width: 24px; height: 1px; background: var(--p-accent);
+}
+.hero--adr .hero__facts dt { color: rgb(255 255 255 / .7); }
+.hero--adr .hero__facts dd { color: #fff; }
+
+/* Móvil / tablet: el kit pone la foto arriba y el texto sobre el carbón.
+   La capa solo oscurece la foto ligeramente por abajo para fundirla con el fondo. */
+@media (max-width: 1023px) {
+  .hero--adr .hero__shade {
+    top: var(--nav); bottom: auto; height: var(--photo);
+    background: linear-gradient(0deg, var(--p-bg) 0%, rgb(18 19 21 / 0) 40%);
+  }
+  .hero--adr .hero__eyebrow { color: var(--p-muted); }
+  .hero--adr .hero__eyebrow strong { color: var(--p-ink); }
+  .hero--adr .hero__lead { color: var(--p-ink); }
+}
+/* Teléfono: foto más baja y menos aire para que el botón quede en el primer pantallazo */
+@media (max-width: 639px) {
+  .hero--adr { --photo: 32svh; --hgap: 20px; }
+  .hero--adr .hero__eyebrow { margin-bottom: var(--s-3); }
+  .hero--adr h1 { font-size: clamp(34px, 9.6vw, 44px); }
+  /* la barra fija inferior ya lleva "Pedir cita": en el hero queda solo el botón principal */
+  .hero--adr .btn--secondary { display: none; }
+}
+
+/* ---------- Entrada del hero (una vez, al cargar) ----------
+   Foto: escala 1.04 → 1 lenta (sensación de "acercarse" al local).
+   Texto: escalonado 60ms, 12px de recorrido, 560ms ease-out. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero--adr > .hero__bg { animation: adr-settle 1400ms var(--ease-out) both; }
+  .hero--adr .hero__text > *,
+  .hero--adr .hero__facts > div { animation: adr-rise 560ms var(--ease-out) both; }
+  .hero--adr .hero__text > :nth-child(1) { animation-delay: 120ms; }
+  .hero--adr .hero__text > :nth-child(2) { animation-delay: 180ms; }
+  .hero--adr .hero__text > :nth-child(3) { animation-delay: 240ms; }
+  .hero--adr .hero__text > :nth-child(4) { animation-delay: 300ms; }
+  .hero--adr .hero__facts > div:nth-child(1) { animation-delay: 420ms; }
+  .hero--adr .hero__facts > div:nth-child(2) { animation-delay: 470ms; }
+  .hero--adr .hero__facts > div:nth-child(3) { animation-delay: 520ms; }
+  .hero--adr .hero__facts > div:nth-child(4) { animation-delay: 570ms; }
+}
+@keyframes adr-settle { from { transform: scale(1.04); } to { transform: scale(1); } }
+@keyframes adr-rise   { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+/* =====================================================================
+   Fade-in al hacer scroll (pedido en el brief) para las secciones de fase 2.
+   Solo se oculta si hay JS y no hay reduced-motion: sin JS todo se ve.
+   Uso: <div data-reveal> … </div>
+   ===================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  html.adr-js [data-reveal]:not(.is-in) { opacity: 0; transform: translateY(16px); }
+  html.adr-js [data-reveal] { transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html.adr-js .svc[data-reveal] { transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out), border-color 200ms ease; }
+}
+/* Escalonado dentro de una misma fila: style="--d: 60ms" */
+html.adr-js [data-reveal] { transition-delay: var(--d, 0ms); }
+
+/* =====================================================================
+   Piezas comunes de sección
+   ===================================================================== */
+/* Alto útil de una pantalla (la caja del kit: 100svh menos sus paddings) */
+:root { --screen: calc(100svh - var(--padt) - var(--padb) - var(--bar)); }
+
+/* Fondo alterno: un paso más claro que el carbón, separa secciones sin líneas */
+.adr-alt { background: var(--p-surface); --bg: var(--p-surface); }
+
+/* Foto en marco: recorte cuadrado-suave, zoom 1.03 al pasar por encima (dentro del marco) */
+:is(.svc__photo) {
+  margin: 0; position: relative; overflow: clip; border-radius: var(--r-lg); background: var(--p-surface);
+}
+:is(.svc__photo) > img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transition: transform 700ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  :is(.svc__photo):hover > img { transform: scale(1.03); }
+}
+
+/* =====================================================================
+   SERVICIOS
+   ===================================================================== */
+.svc__photo { height: min(var(--screen), 708px); }
+.svc__photo > img { object-position: 50% 62%; }
+.svc__body { display: flex; flex-direction: column; min-height: min(var(--screen), 708px); }
+.svc__body .section-head h2 { max-width: 22ch; }
+
+.svc__grid {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-4);
+}
+.svc {
+  display: grid; align-content: start; gap: var(--s-2);
+  padding: var(--s-5) var(--s-6); border-radius: var(--r-md);
+  background: var(--p-surface); border: 1px solid var(--line);
+  transition: border-color 200ms ease, transform 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .svc:hover { border-color: color-mix(in oklab, var(--p-accent) 55%, transparent); }
+  .svc:hover .svc__ic { transform: translateY(-2px); }
+}
+.svc__ic {
+  width: 28px; height: 28px; fill: none; stroke: var(--p-accent); stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round; margin-bottom: var(--s-2);
+  transition: transform 200ms var(--ease-out);
+}
+.svc h3 { font: 600 var(--t-card)/1.25 var(--font-text); letter-spacing: -0.01em; }
+.svc p { color: var(--p-muted); font-size: var(--t-body); line-height: 1.55; }
+.svc__body > .btn-row { margin-top: auto; padding-top: var(--s-6); }
+
+@media (max-width: 1023px) {
+  #servicios { --h: 2; }
+  .svc__photo { height: auto; grid-column: 1 / -1; order: 2; margin-top: var(--s-6); }
+  /* foto vertical en un marco apaisado: proporción fija (no depende del alto de la ventana)
+     y encuadre bajo para que se vean las dos ruedas enteras */
+  .svc__photo { aspect-ratio: 4 / 3; }
+  .svc__photo > img { object-position: 50% 70%; }
+  .svc__body { grid-column: 1 / -1; min-height: 0; }
+}
+@media (max-width: 639px) {
+  .svc__grid { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
+  .svc { padding: var(--s-5); grid-template-columns: 28px minmax(0, 1fr); column-gap: var(--s-4); }
+  .svc__ic { grid-row: 1 / span 2; margin: 0; }
+  .svc__photo { aspect-ratio: 1 / 1; }
+  .svc__photo > img { object-position: 50% 72%; }
+}
+
+/* =====================================================================
+   TALLER (pared de fotos)
+   ===================================================================== */
+.taller__head { margin-bottom: var(--head-gap); align-items: end; }
+.taller__head .t-lead { color: var(--p-muted); max-width: 52ch; }
+.taller__facts { display: flex; gap: var(--s-7); margin: 0; }
+.taller__facts dt { font-size: var(--t-small); color: var(--p-muted); }
+.taller__facts dd { margin: var(--s-1) 0 0; font-weight: 500; }
+
+
+@media (max-width: 1023px) {
+  .taller__facts { gap: var(--s-6); }
+}
+@media (max-width: 639px) {
+  #taller { --hm: 2; }
+  .taller__facts { flex-direction: column; gap: var(--s-4); }
+}
+
+/* =====================================================================
+   OPINIONES
+   ===================================================================== */
+.rating { display: flex; flex-direction: column; min-height: min(var(--screen), 600px); }
+.rating__score {
+  margin-top: var(--s-7);
+  font: 700 clamp(112px, 12vw, 200px)/.85 var(--font-display); font-stretch: 125%;
+  letter-spacing: -0.04em; color: var(--p-ink);
+}
+.rating__score span { font-size: max(24px, .28em); font-weight: 500; color: var(--p-muted); letter-spacing: 0; margin-left: .15em; }
+.rating__stars { margin-top: var(--s-5); }
+.rating__stars svg { width: 160px; height: 32px; display: block; }
+.rating__stars .off use { fill: color-mix(in oklab, var(--p-ink) 18%, transparent); }
+.rating__stars .on use { fill: var(--p-accent); }
+.rating__meta { margin-top: var(--s-5); max-width: 40ch; }
+.rating > .btn-row { margin-top: auto; padding-top: var(--s-6); }
+
+
+
+/* Tarjetas de reseña (texto real de Google) */
+.review {
+  margin: 0; padding: var(--s-5) var(--s-6); border-radius: var(--r-md);
+  background: var(--p-surface); border: 1px solid var(--line); display: grid; gap: var(--s-3);
+}
+.review blockquote { margin: 0; font-size: 17px; line-height: 1.55; color: var(--p-ink); text-wrap: pretty; }
+.review figcaption { font-size: var(--t-small); color: var(--p-muted); }
+.review__stars { color: var(--p-accent); letter-spacing: 3px; font-size: 14px; line-height: 1; }
+
+@media (max-width: 1023px) {
+  #opiniones { --h: 2; }
+  .rating { min-height: 0; }
+  .rating > .btn-row { margin-top: 0; }
+  .reviews { grid-column: 1 / -1; margin-top: var(--s-7); }
+}
+@media (max-width: 639px) { .review { padding: var(--s-5); } .review blockquote { font-size: 16px; } }
+
+/* =====================================================================
+   CITA
+   ===================================================================== */
+.cita__intro h2 { max-width: 14ch; }
+.cita__intro .t-lead { margin-top: var(--s-5); color: var(--p-muted); }
+.cita__steps { margin-top: var(--s-7); padding: 0; list-style: none; counter-reset: paso; }
+.cita__steps > li { grid-template-columns: 32px minmax(0, 1fr) auto; }
+.cita__steps > li::before {
+  counter-increment: paso; content: counter(paso);
+  font: 600 var(--t-body)/1.5 var(--font-display); color: var(--p-accent);
+}
+.cita__steps .rows__value { grid-column: 3; color: var(--p-muted); }
+
+.cita__form {
+  padding: var(--s-7); border-radius: var(--r-lg);
+  background: var(--p-bg); border: 1px solid var(--line);
+}
+.cita__form .field { color: var(--p-ink); }
+.cita__form .field :is(input, select, textarea) {
+  background: var(--p-surface); border-color: color-mix(in oklab, var(--p-ink) 16%, transparent);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.cita__form .field :is(input, select, textarea):focus-visible {
+  outline: none; border-color: var(--p-accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--p-accent) 30%, transparent);
+}
+.cita__form .field textarea { min-height: 96px; }
+.cita__form .field[data-invalid] :is(input, select, textarea) { border-color: #ff7a6b; }
+/* El error va en la misma línea que la etiqueta, a la derecha:
+   mostrarlo no cambia el alto del formulario */
+.cita__form .field { grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; }
+.cita__form .field > :is(input, select, textarea) { grid-column: 1 / -1; }
+.field__label { grid-column: 1; grid-row: 1; }
+.field__err { grid-column: 2; grid-row: 1; font-size: var(--t-label); font-weight: 400; color: #ff9b8f; text-align: right; }
+
+/* Alternativa directa bajo los pasos: llamar o WhatsApp */
+.cita__alt { margin-top: var(--s-7); display: grid; gap: var(--s-3); }
+.cita__alt .t-small { margin: 0; }
+@media (max-width: 639px) { .cita__alt .btn-row { flex-direction: column; } .cita__alt .btn { width: 100%; } }
+.cita__form .btn-row .btn { width: 100%; justify-content: center; }
+.cita__note { margin: 0; }
+.cita__note.is-ok { color: var(--p-ink); }
+/* color-scheme dark para el selector de fecha y los desplegables nativos */
+.cita__form :is(input, select) { color-scheme: dark; }
+
+@media (max-width: 1023px) {
+  #cita { --h: 2; }
+  .cita__intro, .cita__form { grid-column: 1 / -1; }
+  .cita__form { margin-top: var(--s-7); }
+}
+@media (max-width: 639px) {
+  .cita__form { padding: var(--s-5); }
+}
+
+/* =====================================================================
+   CONTACTO (cierre)
+   ===================================================================== */
+.visit__text { display: grid; gap: var(--s-5); align-content: start; }
+.visit__text .t-lead { color: var(--p-muted); }
+.visit__text .hours { margin-top: var(--s-3); }
+.visit__text .btn-row { margin-top: var(--s-3); }
+.hours__now { margin: 0; font-size: var(--t-small); color: var(--p-muted); display: flex; align-items: center; gap: var(--s-2); }
+.hours__now::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--p-muted); }
+.hours__now[data-open]::before { background: #4cc38a; }
+.hours__now[data-open] { color: var(--p-ink); }
+.visit__side { display: grid; gap: var(--s-6); }
+.visit__map {
+  position: relative; overflow: clip; border-radius: var(--r-lg);
+  height: clamp(240px, calc(var(--screen) - 160px), 520px); background: var(--p-surface); border: 1px solid var(--line);
+}
+.visit__map iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+  /* mapa en tono oscuro para no romper el modo noche */
+  filter: grayscale(1) invert(.9) contrast(.9) brightness(.95);
+}
+@media (max-width: 1023px) {
+  .visit__text { grid-column: 1 / -1; }
+  .visit__side { grid-column: 1 / -1; margin-top: var(--s-6); }
+  .visit__map { height: 26svh; }
+}
+/* teléfono: el cierre ocupa dos pantallas (texto + horario, luego mapa y pie) */
+@media (max-width: 639px) { footer.closing { --hm: 2; } .visit__map { height: 38svh; } }
+
+.hours__now:empty { display: none; }
+.footer__legal { padding-top: var(--s-5); }
+
+
+/* =====================================================================
+   GALERÍA QUE SE EXPANDE (Taller)
+   Portada de "Hover Expand Gallery" (21st.dev · kedhareswer) a CSS propio.
+   Anima flex-grow (escritorio) / alto de la imagen (acordeón móvil),
+   curva tipo cajón iOS, 560 ms. Sin animación con reduced-motion.
+   ===================================================================== */
+.hx {
+  --hx-rail: 76px; --hx-t: 560ms; --hx-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  list-style: none; margin: 0; padding: 0;
+  display: flex; gap: var(--s-3);
+  height: clamp(300px, calc(var(--screen) - 240px), 500px);
+}
+.hx__item {
+  flex: 0 0 var(--hx-rail); min-width: 0;
+  border-radius: var(--r-lg); overflow: clip; background: var(--p-bg);
+  border: 1px solid var(--line);
+  transition: flex-grow var(--hx-t) var(--hx-ease), flex-basis var(--hx-t) var(--hx-ease), border-color 200ms ease;
+}
+.hx__item.is-active { flex: 1 1 0; border-color: transparent; }
+.hx__btn {
+  position: relative; display: block; width: 100%; height: 100%;
+  padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer;
+}
+.hx__btn:focus-visible { outline: 2px solid var(--p-accent); outline-offset: -2px; border-radius: var(--r-lg); }
+.hx__img { position: absolute; inset: 0; opacity: 0; transition: opacity var(--hx-t) var(--hx-ease); }
+.hx__img img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 900ms var(--ease-out); }
+.hx__item.is-active .hx__img { opacity: 1; }
+@media (min-width: 640px) {
+  .hx__item:not(.is-active) .hx__img { opacity: .28; filter: grayscale(1); transition: opacity var(--hx-t) var(--hx-ease), filter 300ms ease; }
+  .hx__item:not(.is-active):hover .hx__img { opacity: .5; }
+  .hx__item:not(.is-active) .hx__img::after { background: rgb(10 11 12 / .35); }
+}
+.hx__item.is-active .hx__img img { transform: scale(1); }
+/* Sombra inferior solo en el panel abierto, para que la etiqueta lea sobre la foto */
+.hx__img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgb(10 11 12 / .78) 0%, rgb(10 11 12 / 0) 38%); }
+
+/* Etiqueta: vertical en los carriles cerrados, horizontal abajo en el abierto */
+.hx__label {
+  position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+  padding: var(--s-5) 0; gap: var(--s-2); color: var(--p-muted);
+  transition: color 200ms ease;
+}
+.hx__title { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; font-weight: 600; font-size: var(--t-body); letter-spacing: -0.01em; }
+.hx__meta { display: none; }
+.hx__item:not(.is-active):hover .hx__label { color: var(--p-ink); }
+.hx__item:not(.is-active):hover { border-color: color-mix(in oklab, var(--p-accent) 50%, transparent); }
+.hx__item.is-active .hx__label { align-items: flex-start; padding: var(--s-6); color: #fff; }
+.hx__item.is-active .hx__title { writing-mode: horizontal-tb; transform: none; font: 600 var(--t-h3)/1.1 var(--font-display); font-stretch: 112%; }
+.hx__item.is-active .hx__meta { display: block; font-size: var(--t-small); color: rgb(255 255 255 / .8); }
+
+@media (min-width: 640px) and (max-width: 1023px) { .hx { height: 430px; } }
+@media (max-width: 639px) {
+  /* acordeón vertical: filas de 56px, la activa muestra su foto */
+  .hx { flex-direction: column; height: auto; gap: var(--s-2); }
+  .hx__item, .hx__item.is-active { flex: none; }
+  .hx__btn { height: auto; min-height: 56px; }
+  .hx__img { position: relative; display: block; height: 0; transition: height var(--hx-t) var(--hx-ease), opacity var(--hx-t) var(--hx-ease); }
+  /* en el teléfono no hay acordeón: las cuatro fotos a la vista, una bajo otra */
+  .hx__img, .hx__item.is-active .hx__img { height: 28svh; opacity: 1; }
+  .hx__label, .hx__item.is-active .hx__label { color: #fff; }
+  .hx__label, .hx__item.is-active .hx__label {
+    position: absolute; inset: auto 0 0 0; flex-direction: row; justify-content: space-between; align-items: center;
+    padding: 0 var(--s-5); height: 56px;
+  }
+  .hx__title, .hx__item.is-active .hx__title { writing-mode: horizontal-tb; transform: none; font: 600 var(--t-body)/1 var(--font-text); }
+  .hx__meta { display: block; font-size: var(--t-small); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx__item, .hx__img, .hx__img img { transition: none; }
+}
+
+/* =====================================================================
+   RESEÑAS EN MARQUESINA VERTICAL (Opiniones)
+   Portada de "Vertical Testimonials Marquee" (21st.dev · shadcnspace).
+   Dos columnas en sentidos opuestos, bordes difuminados con mask.
+   ===================================================================== */
+.mq {
+  --mq-dur: 46s;
+  position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4);
+  height: min(var(--screen), 640px); overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 14%, #000 86%, transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 14%, #000 86%, transparent 100%);
+}
+.mq__col { min-width: 0; overflow: hidden; }
+.mq__track { display: grid; gap: var(--s-4); padding-bottom: var(--s-4); }
+.mq.is-running .mq__track { animation: mq-up var(--mq-dur) linear infinite; }
+.mq.is-running .mq__col--rev .mq__track { animation-direction: reverse; }
+.mq:is(:hover, :focus-within, .is-paused) .mq__track { animation-play-state: paused; }
+@keyframes mq-up { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+
+.mq__pause {
+  position: absolute; right: var(--s-2); bottom: var(--s-2); z-index: 2;
+  width: 36px; height: 36px; display: grid; place-items: center;
+  border-radius: 999px; border: 1px solid var(--line); background: var(--p-bg); color: var(--p-ink); cursor: pointer;
+  transition: transform 160ms var(--ease-out), border-color 150ms ease;
+}
+.mq__pause:hover { border-color: var(--p-accent); }
+.mq__pause:active { transform: scale(0.94); }
+.mq__pause svg { width: 14px; height: 14px; fill: currentColor; }
+.mq__pause .i-play, .mq.is-paused .mq__pause .i-pause { display: none; }
+.mq.is-paused .mq__pause .i-play { display: block; }
+.mq:not(.is-running) .mq__pause { display: none; }
+/* sin movimiento (reduced-motion / sin JS): lista fija y legible entera */
+.mq:not(.is-running) { -webkit-mask-image: none; mask-image: none; height: auto; overflow: visible; }
+
+@media (max-width: 1023px) { .mq { grid-column: 1 / -1; margin-top: var(--s-7); height: 70svh; } }
+@media (max-width: 639px) {
+  .mq { grid-template-columns: 1fr; height: 88svh; }
+  .mq.is-running .mq__col--rev { display: none; }   /* una columna: adr.js le pasa las reseñas de la otra */
+}
+
+/* =====================================================================
+   FOCO QUE SIGUE AL PUNTERO (tarjetas de servicio y reseñas)
+   Idea del componente "Spotlight" de 21st.dev; implementación propia:
+   un degradado radial ámbar en --mx/--my + un anillo en el borde.
+   ===================================================================== */
+[data-spot] { position: relative; isolation: isolate; }
+[data-spot]::before {
+  content: ""; position: absolute; inset: -1px; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklab, var(--p-accent) 16%, transparent), transparent 70%);
+  opacity: 0; transition: opacity 250ms ease;
+}
+[data-spot]::after {
+  content: ""; position: absolute; inset: -1px; border-radius: inherit; pointer-events: none; padding: 1px;
+  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklab, var(--p-accent) 85%, transparent), transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: 0; transition: opacity 250ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  [data-spot]:hover::before, [data-spot]:hover::after { opacity: 1; }
+}
+
+/* ---------- Logo real del taller (PNG circular con fondo transparente) ---------- */
+.nav__logo .nav__logo-img { width: 40px; height: 40px; border-radius: 50%; flex: none;
+  transition: transform 300ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  /* guiño a la rueda dentada del logo: medio giro suave al pasar el ratón */
+  .nav__logo:hover .nav__logo-img { transform: rotate(-12deg); }
+}
+@media (max-width: 639px) { .nav__logo .nav__logo-img { width: 34px; height: 34px; } }
+.footer__logo .nav__logo-img { width: 56px; height: 56px; }
+
+/* =====================================================================
+   ALTURAS SEGURAS
+   El kit fija cada sección a 1–2 pantallas exactas (height). En pantallas
+   bajas (móviles pequeños, portátiles de 650px de alto, apaisado, texto
+   ampliado) el contenido no cabe y se montaba sobre la sección siguiente.
+   Aquí la pantalla pasa a ser un MÍNIMO: la sección crece si hace falta.
+   ===================================================================== */
+main > :is(section, .section), footer.closing {
+  height: auto;
+  min-height: calc(var(--h, 1) * 100vh); min-height: calc(var(--h, 1) * 100svh);
+  display: flex; flex-direction: column;
+}
+main > :is(section, .section) > .wrap, footer.closing > .wrap { flex: 1 0 auto; height: auto; min-height: 0; }
+@media (max-width: 639px) {
+  main > :is(section, .section):not(.hero), footer.closing {
+    height: auto;
+    min-height: calc(var(--hm, var(--h, 1)) * 100vh); min-height: calc(var(--hm, var(--h, 1)) * 100lvh);
+  }
+}

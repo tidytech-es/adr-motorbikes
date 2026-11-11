@@ -1,0 +1,13 @@
+# Capturas de revisión
+shots/
+
+# Material de demostración del kit de diseño (no lo usa la web)
+assets/layout/img/
+assets/icons/demo/
+assets/icons/demo.html
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+.netlify/
