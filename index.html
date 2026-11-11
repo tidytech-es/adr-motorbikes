@@ -44,7 +44,7 @@
   --ly-scale: 0.9;
 }
 </style>
-<link rel="stylesheet" href="assets/adr.css?v=13">
+<link rel="stylesheet" href="assets/adr.css?v=16">
 </head>
 
 <body>
@@ -178,35 +178,26 @@
         </dl>
       </div>
 
-      <!-- Galería que se expande (portada de "Hover Expand Gallery", 21st.dev · kedhareswer).
-           Escritorio: carriles verticales, el panel activo crece al pasar el ratón / foco / clic.
-           Móvil y tablet: acordeón vertical. -->
-      <ul class="hx" data-hx data-reveal>
-        <li class="hx__item is-active">
-          <button class="hx__btn" type="button" aria-expanded="true">
-            <span class="hx__img"><img src="assets/img/exposicion-interior.webp" alt="Sala de exposición luminosa con motos de calle, scooters y una moto de cross en fila junto al ventanal" width="765" height="1020" loading="lazy" decoding="async"></span>
-            <span class="hx__label"><span class="hx__title">Exposición</span><span class="hx__meta">Motos a la venta</span></span>
-          </button>
-        </li>
-        <li class="hx__item">
-          <button class="hx__btn" type="button" aria-expanded="false">
-            <span class="hx__img"><img src="assets/img/fachada-frontal.webp" alt="Fachada frontal de A Dues Rodes al anochecer, con la exposición iluminada en la primera planta" width="1360" height="1020" loading="lazy" decoding="async"></span>
-            <span class="hx__label"><span class="hx__title">El local</span><span class="hx__meta">Pol. Ind. Collsabadell</span></span>
-          </button>
-        </li>
-        <li class="hx__item">
-          <button class="hx__btn" type="button" aria-expanded="false">
-            <span class="hx__img"><img src="assets/img/trail-lateral.webp" alt="Moto trail Zontes blanca, negra y azul vista de lado" width="680" height="486" loading="lazy" decoding="async"></span>
-            <span class="hx__label"><span class="hx__title">Trail</span><span class="hx__meta">Zontes</span></span>
-          </button>
-        </li>
-        <li class="hx__item">
-          <button class="hx__btn" type="button" aria-expanded="false">
-            <span class="hx__img"><img src="assets/img/zona-bicis.webp" alt="Tres bicicletas de montaña sobre palés de madera ante un panel rojo con ropa de ciclismo" width="1360" height="1020" loading="lazy" decoding="async"></span>
-            <span class="hx__label"><span class="hx__title">Bicicletas</span><span class="hx__meta">Taller y equipación</span></span>
-          </button>
-        </li>
-      </ul>
+      <!-- Cuadrícula de fotos 2x2 (4:3): las cuatro imágenes casi enteras, sin recortes
+           fuertes. Etiqueta sobre una sombra suave al pie; zoom 1.03 al pasar el ratón. -->
+      <div class="gal">
+        <figure class="gal__item" data-reveal style="--d: 0ms">
+          <img src="assets/img/exposicion-interior.webp" alt="Sala de exposición luminosa con motos de calle, scooters y una moto de cross en fila junto al ventanal" width="765" height="1020" loading="lazy" decoding="async" style="object-position: 50% 62%">
+          <span class="gal__label"><span class="gal__title">Exposición</span><span class="gal__meta">Motos a la venta</span></span>
+        </figure>
+        <figure class="gal__item" data-reveal style="--d: 60ms">
+          <img src="assets/img/fachada-frontal.webp" alt="Fachada frontal de A Dues Rodes al anochecer, con la exposición iluminada en la primera planta" width="1360" height="1020" loading="lazy" decoding="async" style="object-position: 50% 50%">
+          <span class="gal__label"><span class="gal__title">El local</span><span class="gal__meta">Pol. Ind. Collsabadell</span></span>
+        </figure>
+        <figure class="gal__item" data-reveal style="--d: 120ms">
+          <img src="assets/img/trail-lateral.webp" alt="Moto trail Zontes blanca, negra y azul vista de lado" width="680" height="486" loading="lazy" decoding="async" style="object-position: 50% 55%">
+          <span class="gal__label"><span class="gal__title">Trail</span><span class="gal__meta">Zontes</span></span>
+        </figure>
+        <figure class="gal__item" data-reveal style="--d: 180ms">
+          <img src="assets/img/zona-bicis.webp" alt="Tres bicicletas de montaña sobre palés de madera ante un panel rojo con ropa de ciclismo" width="1360" height="1020" loading="lazy" decoding="async" style="object-position: 50% 50%">
+          <span class="gal__label"><span class="gal__title">Bicicletas</span><span class="gal__meta">Taller y equipación</span></span>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -395,6 +386,6 @@
 <script type="module" src="assets/system.js"></script>
 <script type="module" src="assets/motion/motion.js"></script>
 <script type="module" src="assets/layout/layout.js"></script>
-<script type="module" src="assets/adr.js?v=12"></script>
+<script type="module" src="assets/adr.js?v=14"></script>
 </body>
 </html>

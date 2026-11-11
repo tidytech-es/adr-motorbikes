@@ -327,75 +327,31 @@ html.adr-js [data-reveal] { transition-delay: var(--d, 0ms); }
 
 
 /* =====================================================================
-   GALERÍA QUE SE EXPANDE (Taller)
-   Portada de "Hover Expand Gallery" (21st.dev · kedhareswer) a CSS propio.
-   Anima flex-grow (escritorio) / alto de la imagen (acordeón móvil),
-   curva tipo cajón iOS, 560 ms. Sin animación con reduced-motion.
+   GALERÍA DEL TALLER: cuadrícula 2x2 en 4:3
+   (sustituye a la galería desplegable, que recortaba las fotos en tiras)
    ===================================================================== */
-.hx {
-  --hx-rail: 76px; --hx-t: 560ms; --hx-ease: cubic-bezier(0.32, 0.72, 0, 1);
-  list-style: none; margin: 0; padding: 0;
-  display: flex; gap: var(--s-3);
-  height: clamp(300px, calc(var(--screen) - 240px), 500px);
+.gal { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gutter); }
+.gal__item {
+  position: relative; margin: 0; aspect-ratio: 4 / 3; overflow: clip;
+  border-radius: var(--r-lg); background: var(--p-bg);
 }
-.hx__item {
-  flex: 0 0 var(--hx-rail); min-width: 0;
-  border-radius: var(--r-lg); overflow: clip; background: var(--p-bg);
-  border: 1px solid var(--line);
-  transition: flex-grow var(--hx-t) var(--hx-ease), flex-basis var(--hx-t) var(--hx-ease), border-color 200ms ease;
+.gal__item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 700ms var(--ease-out); }
+.gal__item::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(0deg, rgb(10 11 12 / .72) 0%, rgb(10 11 12 / 0) 34%); }
+.gal__label {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4);
+  padding: var(--s-5) var(--s-6); color: #fff;
 }
-.hx__item.is-active { flex: 1 1 0; border-color: transparent; }
-.hx__btn {
-  position: relative; display: block; width: 100%; height: 100%;
-  padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer;
-}
-.hx__btn:focus-visible { outline: 2px solid var(--p-accent); outline-offset: -2px; border-radius: var(--r-lg); }
-.hx__img { position: absolute; inset: 0; opacity: 0; transition: opacity var(--hx-t) var(--hx-ease); }
-.hx__img img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 900ms var(--ease-out); }
-.hx__item.is-active .hx__img { opacity: 1; }
-@media (min-width: 640px) {
-  .hx__item:not(.is-active) .hx__img { opacity: .28; filter: grayscale(1); transition: opacity var(--hx-t) var(--hx-ease), filter 300ms ease; }
-  .hx__item:not(.is-active):hover .hx__img { opacity: .5; }
-  .hx__item:not(.is-active) .hx__img::after { background: rgb(10 11 12 / .35); }
-}
-.hx__item.is-active .hx__img img { transform: scale(1); }
-/* Sombra inferior solo en el panel abierto, para que la etiqueta lea sobre la foto */
-.hx__img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgb(10 11 12 / .78) 0%, rgb(10 11 12 / 0) 38%); }
-
-/* Etiqueta: vertical en los carriles cerrados, horizontal abajo en el abierto */
-.hx__label {
-  position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
-  padding: var(--s-5) 0; gap: var(--s-2); color: var(--p-muted);
-  transition: color 200ms ease;
-}
-.hx__title { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; font-weight: 600; font-size: var(--t-body); letter-spacing: -0.01em; }
-.hx__meta { display: none; }
-.hx__item:not(.is-active):hover .hx__label { color: var(--p-ink); }
-.hx__item:not(.is-active):hover { border-color: color-mix(in oklab, var(--p-accent) 50%, transparent); }
-.hx__item.is-active .hx__label { align-items: flex-start; padding: var(--s-6); color: #fff; }
-.hx__item.is-active .hx__title { writing-mode: horizontal-tb; transform: none; font: 600 var(--t-h3)/1.1 var(--font-display); font-stretch: 112%; }
-.hx__item.is-active .hx__meta { display: block; font-size: var(--t-small); color: rgb(255 255 255 / .8); }
-
-@media (min-width: 640px) and (max-width: 1023px) { .hx { height: 430px; } }
+.gal__title { font: 600 var(--t-h3)/1.1 var(--font-display); font-stretch: 112%; }
+.gal__meta { font-size: var(--t-small); color: rgb(255 255 255 / .82); }
+@media (hover: hover) and (pointer: fine) { .gal__item:hover img { transform: scale(1.03); } }
+#taller { --h: 2; }   /* escritorio: dos pantallas (titular + cuadrícula 2x2) */
 @media (max-width: 639px) {
-  /* acordeón vertical: filas de 56px, la activa muestra su foto */
-  .hx { flex-direction: column; height: auto; gap: var(--s-2); }
-  .hx__item, .hx__item.is-active { flex: none; }
-  .hx__btn { height: auto; min-height: 56px; }
-  .hx__img { position: relative; display: block; height: 0; transition: height var(--hx-t) var(--hx-ease), opacity var(--hx-t) var(--hx-ease); }
-  /* en el teléfono no hay acordeón: las cuatro fotos a la vista, una bajo otra */
-  .hx__img, .hx__item.is-active .hx__img { height: 28svh; opacity: 1; }
-  .hx__label, .hx__item.is-active .hx__label { color: #fff; }
-  .hx__label, .hx__item.is-active .hx__label {
-    position: absolute; inset: auto 0 0 0; flex-direction: row; justify-content: space-between; align-items: center;
-    padding: 0 var(--s-5); height: 56px;
-  }
-  .hx__title, .hx__item.is-active .hx__title { writing-mode: horizontal-tb; transform: none; font: 600 var(--t-body)/1 var(--font-text); }
-  .hx__meta { display: block; font-size: var(--t-small); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hx__item, .hx__img, .hx__img img { transition: none; }
+  .gal { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
+  .gal__label { padding: var(--s-4) var(--s-5); }
+  .gal__title { font-size: 20px; }
+  #taller { --hm: 2; }
 }
 
 /* =====================================================================
@@ -501,3 +457,5 @@ main > :is(section, .section) > .wrap, footer.closing > .wrap { flex: 1 0 auto; 
   .hero--adr .hero__text { margin-block: auto; padding-bottom: var(--s-7); }
   .hero--adr[data-calm] .hero__facts { position: static; margin-top: 0; }
 }
+/* Tablet: con la cuadrícula 2x2 el taller cabe en una pantalla (crece si hiciera falta) */
+@media (min-width: 640px) and (max-width: 1023px) { #taller { --h: 1; } }

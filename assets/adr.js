@@ -128,28 +128,6 @@ abiertoAhora();
 setInterval(abiertoAhora, 60_000);
 
 // ---------------------------------------------------------------------
-// Galería que se expande (Taller). Ratón: se abre al pasar por encima.
-// Táctil y teclado: al tocar / enfocar. Solo un panel abierto.
-// ---------------------------------------------------------------------
-document.querySelectorAll('[data-hx]').forEach((list) => {
-  const items = [...list.querySelectorAll('.hx__item')];
-  const open = (item) => {
-    if (item.classList.contains('is-active')) return;
-    items.forEach((it) => {
-      const on = it === item;
-      it.classList.toggle('is-active', on);
-      it.querySelector('.hx__btn').setAttribute('aria-expanded', String(on));
-    });
-  };
-  items.forEach((item) => {
-    const btn = item.querySelector('.hx__btn');
-    btn.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') open(item); });
-    btn.addEventListener('focus', () => open(item));
-    btn.addEventListener('click', () => open(item));
-  });
-});
-
-// ---------------------------------------------------------------------
 // Marquesina de reseñas: duplica cada pista (copia oculta a lectores de
 // pantalla) para el bucle sin saltos. En el teléfono la única columna
 // visible recibe también las reseñas de la segunda. Botón de pausa (WCAG 2.2.2).
