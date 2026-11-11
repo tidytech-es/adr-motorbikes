@@ -489,3 +489,15 @@ main > :is(section, .section) > .wrap, footer.closing > .wrap { flex: 1 0 auto; 
     min-height: calc(var(--hm, var(--h, 1)) * 100vh); min-height: calc(var(--hm, var(--h, 1)) * 100lvh);
   }
 }
+
+/* ---------- Hero: datos al pie sin solaparse nunca con los botones ----------
+   El kit colocaba la franja de datos en absoluto al pie del bloque; con las
+   alturas seguras ese bloque ya no llena el hero y la franja subía encima de
+   los botones. Ahora va en el flujo: el texto se centra en el hueco libre y la
+   franja queda abajo; si no hay sitio, el hero crece en vez de solaparse. */
+@media (min-width: 1024px) {
+  .hero--adr > .wrap { display: flex; flex-direction: column; }
+  .hero--adr > .wrap > .hero-text { flex: 1 0 auto; display: flex; flex-direction: column; justify-content: flex-start; }
+  .hero--adr .hero__text { margin-block: auto; padding-bottom: var(--s-7); }
+  .hero--adr[data-calm] .hero__facts { position: static; margin-top: 0; }
+}
